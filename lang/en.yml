@@ -1,0 +1,9 @@
+en:
+  SlidePage:
+      PLURALNAME: 'Slides'
+      SINGULARNAME: 'Slide'
+      DESCRIPTION: 'A single slide for a carousel, complete with caption'
+  SlideFolder:
+      PLURALNAME: 'Folders of Slides'
+      SINGULARNAME: 'Folder of Slides'
+      DESCRIPTION: 'A folder of slides - these are normally shown in the same slide carousel'

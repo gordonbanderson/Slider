@@ -1,0 +1,12 @@
+th:
+  SlidePage:
+      PLURALNAME: 'Slides (TH)'
+      SINGULARNAME: 'Slide (TH)'
+      DESCRIPTION: 'A single slide for a carousel, complete with caption (TH)'
+      PHOTO: 'Photo (TH)'
+      CAPTION: 'Caption (TH)'
+      CHOOSE_INTERNAL_LINK: 'Please choose a page from this website (TH)'
+  SlideFolder:
+      PLURALNAME: 'Folders of Slides (TH)'
+      SINGULARNAME: 'Folder of Slides (TH)'
+      DESCRIPTION: 'A folder of slides - these are normally shown in the same slide carousel (TH)'
