@@ -31,8 +31,8 @@ class SlidePage extends Page {
      **/
     function getCMSFields() {
         $fields = parent::getCMSFields();
-       $fields->addFieldToTab("Root.Main", $uf = new UploadField(_t('SlidePage.PHOTO', 'Photo')));
-        $fields->addFieldToTab("Root.Main", new TextField(_t('SlidePage.CAPTION', 'Caption')));
+       $fields->addFieldToTab("Root.Main", $uf = new UploadField('Photo', _t('SlidePage.PHOTO', 'Photo')));
+        $fields->addFieldToTab("Root.Main", new TextField('Caption', _t('SlidePage.CAPTION', 'Caption')));
 
        $fields->removeFieldFromTab("Root.Main","Content");
        $fields->addFieldToTab('Root.Main',          new TreeDropdownField( "InternalPageID", _t('SlidePage.CHOOSE_INTERNAL_LINK', 'Select a page on the website'), "SiteTree" ));
