@@ -1,9 +1,12 @@
 <div class="sliderContainer">
 <% loop AllChildren %>
  <div class="imageCaptionContainer">
- <a href="$Link"><img class="shadowbox sliderImage" data-interchange="[$Photo.SetHeight(480).URL, (default)],[$Photo.SetHeight(480).URL, (medium)],[$Photo.SetHeight(480).URL, (large)], [$Photo.SetHeight(480).URL, (small)]">
-<noscript><img src="$Photo.SetHeight(330).URL"></noscript></a>
-    <div class="sliderCaption">$Caption</div>
+ <a href="$Link">
+ <figure>
+ <img class="shadowbox sliderImage" data-interchange="[$Photo.CroppedFocusedImage(720,360).URL, (default)],[$Photo.CroppedFocusedImage(720,360).URL, (medium)],[$Photo.CroppedFocusedImage(720,360).URL, (large)], [$Photo.CroppedFocusedImage(720,360).URL, (small)]"/>
+<noscript><img src="$Photo.CroppedFocusedImage(6000,300).URL"></noscript>
+    <figcaption class="sliderCaption">$Caption</figcaption>
+    </a>
   </div>
  
 <% end_loop %>
