@@ -8,7 +8,6 @@
     <figcaption class="sliderCaption">$Caption</figcaption>
     </a>
   </div>
- 
 <% end_loop %>
 </div>
  
