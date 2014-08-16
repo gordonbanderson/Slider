@@ -80,6 +80,16 @@ class SlidePage extends Page {
         return $fields;
     }
 
+    function getPortletImage() {
+        $image = null;
+        if ($this->InternalPage() instanceof RenderableAsPortlet) {
+            $image = $this->InternalPage()->getPortletImage();
+        } else {
+            $image = $this->Photo();
+        }
+        return $image;
+    }
+
 
 
     function getThumbnail() {
