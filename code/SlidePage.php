@@ -31,17 +31,22 @@ class SlidePage extends Page {
      **/
     function getCMSFields() {
         $fields = parent::getCMSFields();
-       $fields->addFieldToTab("Root.Main", $uf = new UploadField('Photo', _t('SlidePage.PHOTO', 'Photo')));
+        $existing_photo = null;
+        $photo_field = new UploadField('Photo', _t('SlidePage.PHOTO', 'Photo'));
+        $photo_info = new LiteralField('PhotoInfo', _t('Slide.PHOTO_INFO','If the page you choose to link to has an image already it will appear here'), 'Photo');
+        $composite_photoField = CompositeField::create($photo_field, $photo_info);
+        $fields->addFieldToTab("Root.Main", $composite_photoField);
         $fields->addFieldToTab("Root.Main", new TextField('Caption', _t('SlidePage.CAPTION', 'Caption')));
+        $fields->renameField('Title', 'Slide Title');
 
-       $fields->removeFieldFromTab("Root.Main","Content");
-       $fields->addFieldToTab('Root.Main',          new TreeDropdownField( "InternalPageID", _t('SlidePage.CHOOSE_INTERNAL_LINK', 'Select a page on the website'), "SiteTree" ));
+        $fields->removeFieldFromTab("Root.Main","Content");
+        $fields->addFieldToTab('Root.Main',          new TreeDropdownField( "InternalPageID", _t('SlidePage.CHOOSE_INTERNAL_LINK', 'Select a page on the website'), "SiteTree" ));
 
         // TRACE2 - one to many
-        
+
         // CODE TRACE2 - has one
 
-        
+
         return $fields;
     }
 
