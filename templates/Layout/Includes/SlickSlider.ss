@@ -1,3 +1,4 @@
+<% cached ID, LastEdited,Locale,$CacheKey('homepagesliderfullwidth','ChildPage') %>
 <div class="sliderContainer">
 <% loop AllChildren %>
  <div class="imageCaptionContainer">
@@ -10,4 +11,4 @@
   </div>
 <% end_loop %>
 </div>
- 
+ <% end_cached %>
