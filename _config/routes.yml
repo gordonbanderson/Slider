@@ -1,0 +1,7 @@
+---
+Name: sliderroutes
+After: 'framework/routes#coreroutes'
+---
+Director:
+  rules:
+    'slider/$Action/$ID': 'SlidePage_Controller'
