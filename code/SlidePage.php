@@ -35,6 +35,8 @@ class SlidePage extends Page {
     @return Fields to edit the content type WebsitePortfolioPage
      **/
     function getCMSFields() {
+        Requirements::javascript('slider/javascript/slideredit.js');
+
         $fields = parent::getCMSFields();
         $existing_photo = null;
         $photo_field = null;
@@ -48,6 +50,11 @@ class SlidePage extends Page {
             $parents = class_parents($internal_page);
             error_log(print_r($parents,1));
         }
+
+
+         $fields->addFieldToTab('Root.Main',
+            new TreeDropdownField( "InternalPageID", _t('SlidePage.CHOOSE_INTERNAL_LINK', 'Select a page on the website to link to'), "SiteTree" ));
+
 
         $composite_photoField = null;
 
@@ -74,9 +81,7 @@ class SlidePage extends Page {
         $fields->renameField('Title', 'Slide Title');
 
         $fields->removeFieldFromTab("Root.Main","Content");
-        $fields->addFieldToTab('Root.Main',
-            new TreeDropdownField( "InternalPageID", _t('SlidePage.CHOOSE_INTERNAL_LINK', 'Select a page on the website'), "SiteTree" ));
-
+       
         return $fields;
     }
 
@@ -121,5 +126,23 @@ class SlidePage extends Page {
 }
 
 class SlidePage_Controller extends Page_Controller {
+
+    private static $allowed_actions = array('newpageselected' => true);
+   
+
+    /*
+    When a new item is selected return JSON containing the title and image
+    */
+    public function newpageselected(SS_HTTPRequest $request) {
+        error_log('**** NEW PAGE SELECTED ****');
+        $sitetree_id = $request->param( 'ID' );
+        $page = SiteTree::get_by_id($sitetree_id);
+        $result = array();
+        if ($page) {
+            $result['Title'] = $page->Title;
+        }
+
+        return json_encode($result);
+
+    }
 }
-?>
