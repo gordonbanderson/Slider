@@ -85,6 +85,9 @@ class SlidePage extends Page {
         return $fields;
     }
 
+    /*
+    Accessible from templates as $PortletImage
+    */
     function getPortletImage() {
         $image = null;
         if ($this->InternalPage() instanceof RenderableAsPortlet) {
