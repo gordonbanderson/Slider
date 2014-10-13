@@ -15,10 +15,10 @@ class SlidePage extends Page {
 
     static $allowed_children = 'none';
 
-    static $defaults = array( 
-        'ShowInMenus' => 0,
-        //'ShowInSearch' => 0
-      );
+    private static $defaults = array ( 
+       'ShowInMenus' => false, 
+       'ShowInSearch' => false 
+    );
 
 
     public function getThumbnail2() { 
