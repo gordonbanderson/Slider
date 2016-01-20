@@ -1,17 +1,22 @@
 {
-	"name": "weboftalent/slider",
-	"description": "Store slides under the current page, and render them using Zurb foundation's Orbit slideshow viewer",
-	"type": "silverstripe-module",
-	"keywords": ["silverstripe", "slider","slides","weboftalent"],
-	"authors": [
-		{
-			"name": "Gordon Anderson",
-			"email": "gordon.b.anderson@gmail.com",
-			"role": "Developer"
-		}
-	],
-	"require":
-	{
-		"silverstripe/framework": "~3.1"
-	}
+  "name": "weboftalent/slider",
+  "description": "Store slides under the current page, and render them using Zurb foundation's Orbit slideshow viewer",
+  "type": "silverstripe-module",
+  "keywords": [
+    "silverstripe",
+    "slider",
+    "slides",
+    "weboftalent"
+  ],
+  "authors": [
+    {
+      "name": "Gordon Anderson",
+      "email": "gordon.b.anderson@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "silverstripe/framework": "~3.1"
+  },
+  "license": "BSD-3-Clause"
 }
