@@ -1,6 +1,6 @@
 {
   "name": "weboftalent/slider",
-  "description": "Store slides under the current page, and render them using Zurb foundation's Orbit slideshow viewer",
+  "description": "Store slides under the current page, and render them using various jQuery slideshow viewers",
   "type": "silverstripe-module",
   "keywords": [
     "silverstripe",
