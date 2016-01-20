@@ -1,40 +1,32 @@
 <?php
 /**
-* Defines the StaffPage page type
+* Defines the StaffPage page type.
 */
-
-class SlidePage extends Page {
-    static $db = array(
-        'Caption' => 'Text'
+class SlidePage extends Page
+{
+    public static $db = array(
+        'Caption' => 'Text',
     );
-    static $has_one = array(
+
+    public static $has_one = array(
         'Photo' => 'Image',
-        'InternalPage' => 'SiteTree'
+        'InternalPage' => 'SiteTree',
     );
 
+    public static $allowed_children = 'none';
 
-    static $allowed_children = 'none';
-
-    private static $defaults = array ( 
-       'ShowInMenus' => false, 
-       'ShowInSearch' => false 
+    private static $defaults = array(
+       'ShowInMenus' => false,
+       'ShowInSearch' => false,
     );
 
+    public function getThumbnail2()
+    {
+        return $this->InternalPage()->getPortletImage()->CMSThumbnail()->Tag;
+    }
 
-    public function getThumbnail2() { 
-      return $this->InternalPage()->getPortletImage()->CMSThumbnail()->Tag;
-   }
-
-
-
-
-    
-    /** 
-    Create the fields that are required to edit this model
-
-    @return Fields to edit the content type WebsitePortfolioPage
-     **/
-    function getCMSFields() {
+    public function getCMSFields()
+    {
         Requirements::javascript('slider/javascript/slideredit.js');
 
         $fields = parent::getCMSFields();
@@ -42,27 +34,24 @@ class SlidePage extends Page {
         $photo_field = null;
         $internal_page = $this->InternalPage();
 
-        if($internal_page instanceof RenderableAsPortlet) {
+        if ($internal_page instanceof RenderableAsPortlet) {
             error_log('Class implements renderable as a portlet');
             $existing_photo = $this->InternalPage()->getPortletImage();
         } else {
             // check parents recursively
             $parents = class_parents($internal_page);
-            error_log(print_r($parents,1));
+            error_log(print_r($parents, 1));
         }
 
-
-         $fields->addFieldToTab('Root.Main',
-            new TreeDropdownField( "InternalPageID", _t('SlidePage.CHOOSE_INTERNAL_LINK', 'Select a page on the website to link to'), "SiteTree" ));
-
+        $fields->addFieldToTab('Root.Main',
+            new TreeDropdownField('InternalPageID', _t('SlidePage.CHOOSE_INTERNAL_LINK', 'Select a page on the website to link to'), 'SiteTree'));
 
         $composite_photoField = null;
 
         if (!$existing_photo) {
             $photo_field = new UploadField('Photo', _t('SlidePage.PHOTO', 'Photo'));
-            $photo_info = new LiteralField('PhotoInfo', _t('Slide.PHOTO_INFO','If the page you choose to link to has an image already it will appear here'), 'Photo');
+            $photo_info = new LiteralField('PhotoInfo', _t('Slide.PHOTO_INFO', 'If the page you choose to link to has an image already it will appear here'), 'Photo');
             $composite_photoField = CompositeField::create($photo_field, $photo_info);
-
         } else {
             // FIXME, find a cleaner way of doing this
             $composite_photoField = new LiteralField('Thumbnail2', '<div id="Thumbnail2" class="field readonly">
@@ -74,78 +63,73 @@ class SlidePage extends Page {
     </div>
 </div>');
         }
-        
+
         $composite_photoField->setTitle('Photo');
-        $fields->addFieldToTab("Root.Main", $composite_photoField);
-        $fields->addFieldToTab("Root.Main", new TextField('Caption', _t('SlidePage.CAPTION', 'Caption')));
+        $fields->addFieldToTab('Root.Main', $composite_photoField);
+        $fields->addFieldToTab('Root.Main', new TextField('Caption', _t('SlidePage.CAPTION', 'Caption')));
         $fields->renameField('Title', 'Slide Title');
 
-        $fields->removeFieldFromTab("Root.Main","Content");
-       
+        $fields->removeFieldFromTab('Root.Main', 'Content');
+
         return $fields;
     }
 
     /*
     Accessible from templates as $PortletImage
     */
-    function getPortletImage() {
+    public function getPortletImage()
+    {
         $image = null;
         if ($this->InternalPage() instanceof RenderableAsPortlet) {
             $image = $this->InternalPage()->getPortletImage();
         } else {
             $image = $this->Photo();
         }
+
         return $image;
     }
 
-
-
-    function getThumbnail() {
+    public function getThumbnail()
+    {
         if ($Image = $this->Photo()) {
-            
             return $Image->CMSThumbnail();
         } else {
-            
             return '(No Image)';
         }
     }
 
-
-    function getWebsiteAddress() {
+    public function getWebsiteAddress()
+    {
         $result = '#"';
 
         if ($this->InternalPageID) {
-            $targetPage = DataObject::get_by_id( 'Page', $this->InternalPageID );
-            if ( $targetPage ) {
+            $targetPage = DataObject::get_by_id('Page', $this->InternalPageID);
+            if ($targetPage) {
                 $result = $targetPage->Link();
             } else {
                 $result = '#';
             }
         }
-       
-       
+
         return $result;
     }
 }
 
-class SlidePage_Controller extends Page_Controller {
-
+class SlidePage_Controller extends Page_Controller
+{
     private static $allowed_actions = array('newpageselected' => true);
-   
 
     /*
     When a new item is selected return JSON containing the title and image
     */
-    public function newpageselected(SS_HTTPRequest $request) {
-        error_log('**** NEW PAGE SELECTED ****');
-        $sitetree_id = $request->param( 'ID' );
+    public function newpageselected(SS_HTTPRequest $request)
+    {
+        $sitetree_id = $request->param('ID');
         $page = SiteTree::get_by_id($sitetree_id);
         $result = array();
         if ($page) {
             $result['Title'] = $page->Title;
         }
-
         return json_encode($result);
-
     }
 }
